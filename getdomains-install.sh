@@ -45,67 +45,8 @@ add_mark() {
 }
 
 add_tunnel() {
-    echo "We can automatically configure only Wireguard and Amnezia WireGuard. OpenVPN, Sing-box(Shadowsocks2022, VMess, VLESS, etc) and tun2socks will need to be configured manually"
-    echo "Select a tunnel:"
-    echo "1) WireGuard"
-    echo "2) OpenVPN"
-    echo "3) Sing-box"
-    echo "4) tun2socks"
-    echo "5) wgForYoutube"
-    echo "6) Amnezia WireGuard"
-    echo "7) Amnezia WireGuard For Youtube"
-    echo "8) Skip this step"
 
-    while true; do
-    read -r -p '' TUNNEL
-        case $TUNNEL in 
-
-        1) 
-            TUNNEL=wg
-            break
-            ;;
-
-        2)
-            TUNNEL=ovpn
-            break
-            ;;
-
-        3) 
-            TUNNEL=singbox
-            break
-            ;;
-
-        4) 
-            TUNNEL=tun2socks
-            break
-            ;;
-
-        5) 
-            TUNNEL=wgForYoutube
-            break
-            ;;
-
-        6) 
-            TUNNEL=awg
-            break
-            ;;
-
-        7) 
-            TUNNEL=awgForYoutube
-            break
-            ;;
-
-        8)
-            echo "Skip"
-            TUNNEL=0
-            break
-            ;;
-
-        *)
-            echo "Choose from the following options"
-            ;;
-        esac
-    done
+    TUNNEL=singbox
 
     if [ "$TUNNEL" == 'wg' ]; then
         printf "\033[32;1mConfigure WireGuard\033[0m\n"
@@ -480,31 +421,8 @@ add_dns_resolver() {
     echo "1) No [Default]"
     echo "2) DNSCrypt2 (10.7M)"
     echo "3) Stubby (36K)"
-
-    while true; do
-    read -r -p '' DNS_RESOLVER
-        case $DNS_RESOLVER in 
-
-        1) 
-            echo "Skiped"
-            break
-            ;;
-
-        2)
-            DNS_RESOLVER=DNSCRYPT
-            break
-            ;;
-
-        3) 
-            DNS_RESOLVER=STUBBY
-            break
-            ;;
-
-        *)
-            echo "Choose from the following options"
-            ;;
-        esac
-    done
+    
+    DNS_RESOLVER=nothing    
 
     if [ "$DNS_RESOLVER" == 'DNSCRYPT' ]; then
         if opkg list-installed | grep -q dnscrypt-proxy2; then
@@ -585,36 +503,7 @@ add_getdomains() {
     echo "3) Ukraine. uablacklist.net list"
     echo "4) Skip script creation"
 
-    while true; do
-    read -r -p '' COUNTRY
-        case $COUNTRY in 
-
-        1) 
-            COUNTRY=russia_inside
-            break
-            ;;
-
-        2)
-            COUNTRY=russia_outside
-            break
-            ;;
-
-        3) 
-            COUNTRY=ukraine
-            break
-            ;;
-
-        4) 
-            echo "Skiped"
-            COUNTRY=0
-            break
-            ;;
-
-        *)
-            echo "Choose from the following options"
-            ;;
-        esac
-    done
+    COUNTRY=russia_inside
 
     if [ "$COUNTRY" == 'russia_inside' ]; then
         EOF_DOMAINS=DOMAINS=https://raw.githubusercontent.com/itdoginfo/allow-domains/main/Russia/inside-dnsmasq-nfset.lst
